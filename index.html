@@ -125,9 +125,16 @@
     </div>
 
     <iframe id="youtubeMusic" class="youtubeMusic" width="0" height="0" 
-        src="https://www.youtube.com/embed/wOPOtBYs4xs?autoplay=1&loop=1&playlist=wOPOtBYs4xs&mute=1" 
-        frameborder="0" allow="autoplay; encrypted-media">
+       src="https://www.youtube.com/embed/wOPOtBYs4xs?enablejsapi=1&loop=1&playlist=wOPOtBYs4xs" 
+       frameborder="0" allow="autoplay; encrypted-media">
     </iframe>
+
+    <script>
+    document.querySelector(".login-btn").addEventListener("click", function() {
+        let iframe = document.getElementById("youtubeMusic");
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', "*");
+    });
+    </script>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
